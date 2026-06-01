@@ -16,6 +16,7 @@ export default function Login() {
         if (location.state?.successMessage) {
             return { type: 'success', message: location.state.successMessage };
         }
+        // Elif error - set error (from protected) - look for conflict?
         return null;
     });
     const [email, setEmail] = useState('');
