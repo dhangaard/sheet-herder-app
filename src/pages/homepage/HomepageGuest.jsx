@@ -43,13 +43,15 @@ export default function HomepageGuest() {
 
     return (
         <div className={styles.page}>
-            {successMessage && <StatusMessage type="success" message={successMessage} />}
             <section className={styles.hero}>
                 <h1>Sheet Herder</h1>
                 <p className={styles.heroSubtitle}>
                     Your digital companion for tabletop adventures. Manage characters and campaigns in one place.
                 </p>
             </section>
+            <div className={styles.statusWrapper}>
+                {successMessage && <StatusMessage type="success" message={successMessage} />}
+            </div>
             <section className={styles.features}>
                 <FeaturePanel
                     heading={content.heading}
