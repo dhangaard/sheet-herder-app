@@ -29,7 +29,7 @@
 }
 
 .success {
-    background-color: color-mix(in srgb, var(--color-success) 15%, var(--color-status-mix-base));
+    background-color: color-mix(in srgb, var(--color-success) 30%, var(--color-status-mix-base));
 }
 
 .success .accent {
