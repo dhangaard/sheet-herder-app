@@ -37,9 +37,13 @@ const tabContent = {
 export default function HomepageGuest() {
     const location = useLocation();
     const [activeTab, setActiveTab] = useState('character')
-
-    const status = location.state?.status;
+    const [status, setStatus] = useState(location.state?.status ?? null);
     const content = tabContent[activeTab]
+
+    function handleTabChange(id) {
+        setActiveTab(id);
+        setStatus(null);
+    }
 
     return (
         <div className={styles.page}>
@@ -61,7 +65,7 @@ export default function HomepageGuest() {
                     ctaTo={content.ctaTo}
                     tabs={tabs}
                     activeTab={activeTab}
-                    onTabChange={setActiveTab}
+                    onTabChange={handleTabChange}
                 />
             </section>
         </div>
