@@ -38,7 +38,7 @@ export default function HomepageGuest() {
     const location = useLocation();
     const [activeTab, setActiveTab] = useState('character')
 
-    const successMessage = location.state?.successMessage;
+    const status = location.state?.status;
     const content = tabContent[activeTab]
 
     return (
@@ -50,7 +50,7 @@ export default function HomepageGuest() {
                 </p>
             </section>
             <div className={styles.statusWrapper}>
-                {successMessage && <StatusMessage type="success" message={successMessage} />}
+                {status && <StatusMessage status={ status } />}
             </div>
             <section className={styles.features}>
                 <FeaturePanel
