@@ -20,6 +20,10 @@
     --color-error: #C1121F;
     --color-success: #2E9C44;
 
+    /* Danger */
+    --color-danger: #C1121F;
+    --color-danger-hover: #9A0E18;
+
     /* Theme Toggle */
     --theme-toggle-bg: #F0EB9D;
     --theme-toggle-fg: #FFD000;
@@ -54,6 +58,7 @@
 
     /* Font */
     --font-size-subtitle: 1.25rem;
+    --font-size-sm: 0.875rem;
 
     /* Sizing */
     --max-width-content: 1200px;
