@@ -1,4 +1,5 @@
-import { NavLink, Link, useLocation } from 'react-router'
+import { flushSync } from 'react-dom'
+import { NavLink, Link, useLocation, useNavigate } from 'react-router'
 import { useAuth, useAuthActions } from '../../context/auth/useAuth.js'
 import styles from './Header.module.css'
 import Toggle from '../toggle/Toggle.jsx'
@@ -12,9 +13,17 @@ const authPaths = ['/login', '/register'];
 export default function Header({ isDark, toggleTheme }) {
     const { currentUser, isLoggedIn } = useAuth();
     const { logout } = useAuthActions();
+    const navigate = useNavigate();
 
     const location = useLocation();
     const isAuthActive = authPaths.includes(location.pathname);
+
+    const handleLogout = () => {
+        flushSync(() => {
+            navigate('/', { state: { successMessage: 'You have been logged out' } });
+        });
+        logout();
+    }
 
     return (
         <header className={styles.header}>
@@ -46,7 +55,7 @@ export default function Header({ isDark, toggleTheme }) {
                             <Link to="/account" className={styles.username}>
                                 {currentUser.username}
                             </Link>
-                            <button className={styles.logoutButton} onClick={logout}>
+                            <button className={styles.logoutButton} onClick={handleLogout}>
                                 Log out
                             </button>
                         </>
