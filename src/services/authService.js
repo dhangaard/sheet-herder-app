@@ -36,6 +36,11 @@ export function isTokenExpired() {
     }
 }
 
+export async function verifyPassword(email, password) {
+    const response = await fetch(BASE_URL + 'auth/login', buildOptions('POST', false, { email, password }));
+    return response.ok;
+}
+
 export function buildOptions(method, addToken, body) {
     const options = {
         method,

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router'
-import { useAuthActions } from '../../../context/auth/useAuth.js'
+import { Link, Navigate, useNavigate, useLocation } from 'react-router'
+import { useAuth, useAuthActions } from '../../../context/auth/useAuth.js'
 import FormCard from '../../../components/formCard/FormCard.jsx'
 import Field from '../../../components/field/Field.jsx'
 import Button from '../../../components/button/Button.jsx'
@@ -8,20 +8,34 @@ import StatusMessage from '../../../components/statusMessage/StatusMessage.jsx'
 import styles from './Login.module.css'
 
 export default function Login() {
+    const { isLoggedIn } = useAuth();
     const { login } = useAuthActions();
     const navigate = useNavigate();
     const location = useLocation();
 
     const [status, setStatus] = useState(() => {
-        if (location.state?.successMessage) {
+        if (location.state?.errorMessage) {
+            return { type: 'error', message: location.state.errorMessage };
+        }
+        else if (location.state?.successMessage) {
             return { type: 'success', message: location.state.successMessage };
         }
-        return null;
+        else {
+            return null;
+        }
     });
+    const [alreadyLoggedIn] = useState(isLoggedIn);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const destination = location.state?.from || '/';
+    if (alreadyLoggedIn.current) {
+        return (
+            <Navigate to='/account' replace />
+        )
+    }
+    
     const isFormValid = email.trim() !== '' && password.trim() !== '';
 
     async function handleSubmit(event) {
@@ -30,9 +44,10 @@ export default function Login() {
         setLoading(true);
         try {
             await login({ email, password });
-            navigate('/');
+            navigate(destination, { replace: true });
         } catch {
-            setStatus({ type: 'error', message: 'invalid credentials' });
+            setStatus({ type: 'error', message: 'Invalid credentials' });
+            setPassword('');
         } finally {
             setLoading(false);
         }
