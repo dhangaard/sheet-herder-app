@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router'
 import { useAuth } from '../../../context/auth/useAuth.js'
-import { register } from '../../../services/userService'
+import { register } from '../../../services/authService.js' 
 import { validateEmail, validateUsername, validatePassword, validatePasswordMatch } from '../../../utils/validator.js'
 import FormCard from '../../../components/formCard/FormCard.jsx'
 import Field from '../../../components/field/Field.jsx'

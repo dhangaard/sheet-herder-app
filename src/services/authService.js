@@ -1,4 +1,11 @@
-const BASE_URL = 'https://sheet-herder-api.dhangaard.dk/api/v1/';
+import { BASE_URL, throwIfError } from "./apiClient";
+
+const MS_PER_SECOND = 1000;
+
+export async function register(credentials) {
+    const response = await fetch(BASE_URL + 'auth/register', buildOptions('POST', false, credentials));
+    await throwIfError(response, 'Registration failed');
+}
 
 export async function login(credentials) {
     const response = await fetch(BASE_URL + 'auth/login', {
@@ -6,7 +13,7 @@ export async function login(credentials) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials)
     });
-    if (!response.ok) throw new Error('Could not login');
+    await throwIfError(response, 'Could not login')
     const { token } = await response.json();
     localStorage.setItem('token', token);
     return token;
@@ -29,7 +36,7 @@ export function isTokenExpired() {
     if (!token) return true;
     try {
         const payload = JSON.parse(atob(token.split('.')[1]));
-        return payload.exp * 1000 < Date.now();
+        return payload.exp * MS_PER_SECOND < Date.now();
     } catch {
         // Malformed or tampered token — treat as expired
         return true;
