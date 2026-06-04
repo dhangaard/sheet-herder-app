@@ -1,0 +1,26 @@
+.panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'content image';
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+.panel.reverse {
+    grid-template-areas: 'image content';
+}
+
+.content {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.image {
+    grid-area: image;
+}
+
+.description {
+    color: var(--color-text-secondary);
+}
