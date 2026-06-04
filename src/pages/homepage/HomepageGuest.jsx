@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import styles from './HomepageGuest.module.css'
+import { useLocation } from 'react-router'
+import StatusMessage from '../../components/statusMessage/StatusMessage.jsx'
 import FeaturePanel from '../../components/featurePanel/FeaturePanel.jsx'
+import styles from './HomepageGuest.module.css'
 
 const tabs = [
     { id: 'character', label: 'Character Creator' },
@@ -33,11 +35,15 @@ const tabContent = {
 }
 
 export default function HomepageGuest() {
+    const location = useLocation();
     const [activeTab, setActiveTab] = useState('character')
+
+    const successMessage = location.state?.successMessage;
     const content = tabContent[activeTab]
 
     return (
         <div className={styles.page}>
+            {successMessage && <StatusMessage type="success" message={successMessage} />}
             <section className={styles.hero}>
                 <h1>Sheet Herder</h1>
                 <p className={styles.heroSubtitle}>
