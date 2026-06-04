@@ -1,0 +1,7 @@
+.page {
+    max-width: var(--max-width-content);
+    margin: auto;
+    width: 100%;
+    padding: 0 var(--space-lg);
+    min-height: 60vh; /* center vertically */
+}
