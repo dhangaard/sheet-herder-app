@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router'
 import App from '../App.jsx'
 import Account from '../pages/user/account/Account.jsx'
+import CampaignOverview from '../pages/campaign/overview/CampaignOverview.jsx'
+import CharacterCreate from '../pages/character/create/CharacterCreate.jsx'
+import CharacterOverview from '../pages/character/overview/CharacterOverview.jsx'
 import Homepage from '../pages/homepage/Homepage.jsx'
 import Login from '../pages/user/login/Login.jsx'
-import Register from '../pages/user/register/Register.jsx'
-import CampaignOverview from '../pages/campaign/overview/CampaignOverview.jsx'
-import CharacterOverview from '../pages/character/overview/CharacterOverview.jsx'
-import ProtectedRoute from './ProtectedRoute.jsx'
-import CharacterCreate from '../pages/character/create/CharacterCreate.jsx'
 import NotFound from '../pages/notFound/NotFound.jsx'
+import ProtectedRoute from './ProtectedRoute.jsx'
+import Register from '../pages/user/register/Register.jsx'
 
 export default function AppRoutes() {
     return (
