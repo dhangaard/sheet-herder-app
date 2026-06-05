@@ -13,6 +13,12 @@ export async function getCharacter(id) {
     return response.json();
 }
 
+export async function updateCharacter(id, changes) {
+    const response = await fetch(BASE_URL + `character-sheets/${id}`, buildOptions('PUT', true, changes));
+    await throwIfError(response, `Could not update character sheet | id: ${id}`);
+    return response.json();
+}
+
 export async function deleteCharacter(id) {
     const response = await fetch(BASE_URL + `character-sheets/${id}`, buildOptions('DELETE', true));
     await throwIfError(response, `Could not delete character sheet | id: ${id}`);
