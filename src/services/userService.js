@@ -1,18 +1,5 @@
+import { BASE_URL, throwIfError } from './apiClient';
 import { buildOptions } from './authService'
-
-const BASE_URL = 'https://sheet-herder-api.dhangaard.dk/api/v1/';
-
-const throwIfError = async (response, fallbackMessage) => {
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || fallbackMessage);
-    }
-}
-
-export async function register(credentials) {
-    const response = await fetch(BASE_URL + 'auth/register', buildOptions('POST', false, credentials));
-    await throwIfError(response, 'Registration failed');
-}
 
 export async function getCurrentUser(id) {
     const response = await fetch(BASE_URL + `users/${id}`, buildOptions('GET', true));

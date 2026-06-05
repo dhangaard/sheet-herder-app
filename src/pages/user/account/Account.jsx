@@ -65,7 +65,7 @@ export default function Account() {
     if (!original) {
         return (
             <div className={styles.page}>
-                <StatusMessage type="error" message={status?.message || 'Could not load your account'} />
+                <StatusMessage status={{ type: 'error', message: status?.message || 'Could not load your account' }} />
             </div>
         );
     }
@@ -149,7 +149,7 @@ export default function Account() {
 
             await deleteUser(currentUser.id);
             flushSync(() => {
-                navigate('/', { state: { successMessage: 'Your account has been deleted' } });
+                navigate('/', { state: { status: { type: 'success', message: 'Your account has been deleted'} } });
             });
             logout();
         } catch (error) {
@@ -245,7 +245,7 @@ export default function Account() {
                         <Button type="submit" disabled={submitting || !canSubmit}>Save changes</Button>
                     </div>
                 </form>
-                <StatusMessage type={status?.type} message={status?.message} />
+                <StatusMessage status={status} />
             </FormCard>
 
             <section className={styles.dangerZone}>
@@ -253,8 +253,8 @@ export default function Account() {
                 <p className={styles.dangerText}>
                     This permanently deletes your account and every character you own. This cannot be undone.
                 </p>
-                {confirmingDelete ? (
-                    <div className={styles.confirm}>
+                <div className={`${styles.confirmWrapper} ${confirmingDelete ? styles.open : ''}`}>
+                    <div className={styles.confirmInner}>
                         <Field
                             label="Current password"
                             id="deletePassword"
@@ -267,19 +267,22 @@ export default function Account() {
                             autoComplete="current-password"
                         />
                         <div className={styles.confirmButtons}>
-                            <button type="button" className={styles.deleteButton} onClick={handleDelete} disabled={deleting || deletePassword.length === 0}>
+                            <Button variant="danger" onClick={handleDelete} disabled={deleting || deletePassword.length === 0}>
                                 Delete permanently
-                            </button>
-                            <button type="button" className={styles.cancelButton} onClick={handleCancelDelete}>
+                            </Button>
+                            <Button variant="secondary" onClick={handleCancelDelete}>
                                 Cancel
-                            </button>
+                            </Button>
                         </div>
-                        <StatusMessage type={deleteStatus?.type} message={deleteStatus?.message} />
+                        <StatusMessage status={deleteStatus} />
                     </div>
-                ) : (
-                    <button type="button" className={styles.deleteButton} onClick={() => setConfirmingDelete(true)}>
-                        Delete account
-                    </button>
+                </div>
+                {!confirmingDelete && (
+                    <div className={styles.dangerButton}>
+                        <Button variant="danger" onClick={() => setConfirmingDelete(true)}>
+                            Delete account
+                        </Button>
+                    </div>
                 )}
             </section>
         </div>

@@ -19,6 +19,13 @@
     max-width: var(--max-width-text);
 }
 
+.statusWrapper {
+    max-width: var(--max-width-text);
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 var(--space-lg);
+}
+
 .features {
     display: flex;
     flex-direction: column;

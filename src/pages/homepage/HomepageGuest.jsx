@@ -37,19 +37,25 @@ const tabContent = {
 export default function HomepageGuest() {
     const location = useLocation();
     const [activeTab, setActiveTab] = useState('character')
-
-    const successMessage = location.state?.successMessage;
+    const [status, setStatus] = useState(location.state?.status ?? null);
     const content = tabContent[activeTab]
+
+    function handleTabChange(id) {
+        setActiveTab(id);
+        setStatus(null);
+    }
 
     return (
         <div className={styles.page}>
-            {successMessage && <StatusMessage type="success" message={successMessage} />}
             <section className={styles.hero}>
                 <h1>Sheet Herder</h1>
                 <p className={styles.heroSubtitle}>
                     Your digital companion for tabletop adventures. Manage characters and campaigns in one place.
                 </p>
             </section>
+            <div className={styles.statusWrapper}>
+                {status && <StatusMessage status={ status } />}
+            </div>
             <section className={styles.features}>
                 <FeaturePanel
                     heading={content.heading}
@@ -59,7 +65,7 @@ export default function HomepageGuest() {
                     ctaTo={content.ctaTo}
                     tabs={tabs}
                     activeTab={activeTab}
-                    onTabChange={setActiveTab}
+                    onTabChange={handleTabChange}
                 />
             </section>
         </div>

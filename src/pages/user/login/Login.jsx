@@ -14,15 +14,7 @@ export default function Login() {
     const location = useLocation();
 
     const [status, setStatus] = useState(() => {
-        if (location.state?.errorMessage) {
-            return { type: 'error', message: location.state.errorMessage };
-        }
-        else if (location.state?.successMessage) {
-            return { type: 'success', message: location.state.successMessage };
-        }
-        else {
-            return null;
-        }
+        return location.state?.status ?? null;
     });
     const [alreadyLoggedIn] = useState(isLoggedIn);
     const [email, setEmail] = useState('');
@@ -30,7 +22,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
 
     const destination = location.state?.from || '/';
-    if (alreadyLoggedIn.current) {
+    if (alreadyLoggedIn) {
         return (
             <Navigate to='/account' replace />
         )
@@ -83,7 +75,7 @@ export default function Login() {
                     <Button type="submit" disabled={loading || !isFormValid}>Login</Button>
                 </div>
             </form>
-            <StatusMessage type={status?.type} message={status?.message} />
+            <StatusMessage status={ status } />
             <div className={styles.footer}>
                 <a
                     href="#"

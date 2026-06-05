@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router'
 import { useAuth } from '../../../context/auth/useAuth.js'
-import { register } from '../../../services/userService'
+import { register } from '../../../services/authService.js' 
 import { validateEmail, validateUsername, validatePassword, validatePasswordMatch } from '../../../utils/validator.js'
 import FormCard from '../../../components/formCard/FormCard.jsx'
 import Field from '../../../components/field/Field.jsx'
@@ -51,7 +51,7 @@ export default function Register() {
         setLoading(true);
         try {
             await register({ email, username, password });
-            navigate('/login', { state: { successMessage: 'User created' } });
+            navigate('/login', { state: { status: {type: 'success', message: 'User created' } } });
         } catch (error) {
             setApiError(error.message);
             setPassword('');
@@ -114,7 +114,7 @@ export default function Register() {
                     <Button type="submit" disabled={loading || !isFormValid}>Create User</Button>
                 </div>
             </form>
-            <StatusMessage type="error" message={apiError} />
+            <StatusMessage status={apiError ? { type: 'error', message: apiError } : null} />
             <div className={styles.footer}>
                 <span>Already have an account? <Link to="/login">Login</Link></span>
             </div>
