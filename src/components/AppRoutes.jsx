@@ -7,6 +7,7 @@ import Register from '../pages/user/register/Register.jsx'
 import CampaignOverview from '../pages/campaign/overview/CampaignOverview.jsx'
 import CharacterOverview from '../pages/character/overview/CharacterOverview.jsx'
 import ProtectedRoute from './ProtectedRoute.jsx'
+import CharacterCreate from '../pages/character/create/CharacterCreate.jsx'
 import NotFound from '../pages/notFound/NotFound.jsx'
 
 export default function AppRoutes() {
@@ -20,6 +21,7 @@ export default function AppRoutes() {
                 <Route path="campaigns" element={<CampaignOverview />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="account" element={<Account />} />
+                    <Route path="characters/create" element={<CharacterCreate />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Route>
