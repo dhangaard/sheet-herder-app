@@ -1,8 +1,11 @@
-import { Routes, Route } from 'react-router'
+import { Route, Routes } from 'react-router'
 import App from '../App.jsx'
+
 import Account from '../pages/user/account/Account.jsx'
 import CampaignOverview from '../pages/campaign/overview/CampaignOverview.jsx'
 import CharacterCreate from '../pages/character/create/CharacterCreate.jsx'
+import CharacterDetail from '../pages/character/detail/CharacterDetail.jsx'
+import CharacterEdit from '../pages/character/edit/CharacterEdit.jsx'
 import CharacterOverview from '../pages/character/overview/CharacterOverview.jsx'
 import Homepage from '../pages/homepage/Homepage.jsx'
 import Login from '../pages/user/login/Login.jsx'
@@ -17,34 +20,20 @@ export default function AppRoutes() {
                 <Route index element={<Homepage />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
-                <Route path="characters" element={<CharacterOverview />} />
                 <Route path="campaigns" element={<CampaignOverview />} />
+                <Route path="characters" element={<CharacterOverview />} />
+
                 <Route element={<ProtectedRoute />}>
                     <Route path="account" element={<Account />} />
-                    <Route path="characters/create" element={<CharacterCreate />} />
+                    <Route path="characters">
+                        <Route path="create" element={<CharacterCreate />} />
+                        <Route path=":id" element={<CharacterDetail />} />
+                        <Route path=":id/edit" element={<CharacterEdit />} />
+                    </Route>
                 </Route>
+
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
     )
 }
-
-/* 
-import Account from '../pages/user/account/Account.jsx'
-import CharacterOverview from '../pages/character/overview/CharacterOverview.jsx'
-import CharacterDetail from '../pages/character/detail/CharacterDetail.jsx'
-import CharacterCreate from '../pages/character/create/CharacterCreate.jsx'
-import CampaignOverview from '../pages/campaign/overview/CampaignOverview.jsx'
-import NotFound from '../pages/notFound/NotFound.jsx'
-import ProtectedRoute from './ProtectedRoute.jsx'
-
-
-<Route path="characters" element={<CharacterOverview />} />
-                <Route path="campaigns" element={<CampaignOverview />} />
-                <Route element={<ProtectedRoute />}>
-                    <Route path="account" element={<Account />} />
-                    <Route path="characters/:id" element={<CharacterDetail />} />
-                    <Route path="characters/create" element={<CharacterCreate />} />
-                </Route>
-
-*/
