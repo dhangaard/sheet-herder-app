@@ -40,6 +40,21 @@
     filter: brightness(0.9);
 }
 
+.danger {
+    background-color: var(--color-danger);
+    color: var(--color-text-inverse);
+    border-color: var(--color-danger);
+}
+
+.danger:hover {
+    background-color: var(--color-danger-hover);
+    border-color: var(--color-danger-hover);
+}
+
+.danger:active {
+    filter: brightness(0.9);
+}
+
 .button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
