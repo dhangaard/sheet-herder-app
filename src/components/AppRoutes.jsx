@@ -5,6 +5,7 @@ import Homepage from '../pages/homepage/Homepage.jsx'
 import Login from '../pages/user/login/Login.jsx'
 import Register from '../pages/user/register/Register.jsx'
 import CampaignOverview from '../pages/campaign/overview/CampaignOverview.jsx'
+import CharacterOverview from '../pages/character/overview/CharacterOverview.jsx'
 import ProtectedRoute from './ProtectedRoute.jsx'
 import NotFound from '../pages/notFound/NotFound.jsx'
 
@@ -15,6 +16,7 @@ export default function AppRoutes() {
                 <Route index element={<Homepage />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
+                <Route path="characters" element={<CharacterOverview />} />
                 <Route path="campaigns" element={<CampaignOverview />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="account" element={<Account />} />

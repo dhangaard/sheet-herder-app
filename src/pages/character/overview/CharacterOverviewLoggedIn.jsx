@@ -44,7 +44,7 @@ export default function CharacterOverviewLoggedIn() {
             {status && <StatusMessage status={status} />}
             {characters.length === 0 ? (
                 <div className={styles.empty}>
-                    <p>Your herd is empty. Create your first character to get started.</p>
+                    <p>Your herd is empty... Create your first character to get started.</p>
                     <Button onClick={() => navigate('/characters/create')}>Create a Character</Button>
                 </div>
             ) : (
