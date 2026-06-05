@@ -5,6 +5,10 @@
     overflow: hidden;
 }
 
+.card > div:first-child {
+    cursor: pointer;
+}
+
 .header {
     display: flex;
     flex-direction: row;
