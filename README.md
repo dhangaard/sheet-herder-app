@@ -54,69 +54,60 @@ src/
 
 ```mermaid
 flowchart TD
-  main["main.jsx<br/>(React root / providers)"] --> Router["BrowserRouter<br/>(react-router)"]
-  Router --> AuthProvider["AuthProvider<br/>(auth context)"]
-  AuthProvider --> AppRoutes["AppRoutes.jsx<br/>(route definitions)"]
+  main["main.jsx\nBootstrap + providers"] --> AuthProvider["AuthProvider\nAuthContext + AuthActionsContext"]
+  AuthProvider --> AppRoutes["AppRoutes\nRoute definitions"]
+  AppRoutes --> App["App\nLayout shell + dark mode"]
 
-  AppRoutes --> App["App.jsx<br/>(layout shell + theme)"]
-  App --> Header["Header.jsx<br/>(nav + auth actions + theme toggle)"]
-  App --> Outlet["&lt;Outlet /&gt;<br/>(current route content)"]
-  App --> Footer["Footer.jsx<br/>(footer layout)"]
+  App --> Header["Header\nNav + theme toggle"]
+  App --> Outlet["&lt;Outlet /&gt;\nCurrent route"]
+  App --> Footer["Footer"]
 
-  Outlet --> Homepage["Homepage.jsx<br/>(decides guest vs logged-in home)"]
-  Outlet --> Login["Login.jsx<br/>(sign in form)"]
-  Outlet --> Register["Register.jsx<br/>(create user form)"]
-  Outlet --> CampaignOverview["CampaignOverview.jsx<br/>(campaign landing / overview)"]
-  Outlet --> CharacterOverview["CharacterOverview.jsx<br/>(character landing / overview)"]
-  Outlet --> ProtectedRoute["ProtectedRoute.jsx<br/>(guards auth-only pages)"]
-  Outlet --> NotFound["NotFound.jsx<br/>(404 page)"]
+  Header --> Toggle["Toggle\nTheme switch"]
 
-  Homepage --> HomepageGuest["HomepageGuest.jsx<br/>(marketing + feature tabs)"]
-  Homepage --> HomepageLoggedIn["HomepageLoggedIn.jsx<br/>(quick links dashboard)"]
+  Outlet --> Homepage["Homepage\nGuest vs logged-in"]
+  Outlet --> Login["Login\nSign-in form"]
+  Outlet --> Register["Register\nCreate account"]
+  Outlet --> CampaignOverview["CampaignOverview\nGuest vs logged-in"]
+  Outlet --> CharacterOverview["CharacterOverview\nGuest vs logged-in"]
+  Outlet --> ProtectedRoute["ProtectedRoute\nAuth guard"]
+  Outlet --> NotFound["NotFound\n404"]
 
-  CampaignOverview --> CampaignOverviewGuest["CampaignOverviewGuest.jsx<br/>(CTA to login)"]
-  CampaignOverview --> CampaignOverviewLoggedIn["CampaignOverviewLoggedIn.jsx<br/>(currently placeholder)"]
+  Homepage --> HomepageGuest["HomepageGuest\nFeature tabs + CTA"]
+  Homepage --> HomepageLoggedIn["HomepageLoggedIn\nQuick-links dashboard"]
+  HomepageGuest --> FeaturePanel["FeaturePanel\nTabbed features"]
+  FeaturePanel --> TabSwitcher["TabSwitcher"]
+  HomepageLoggedIn --> FeatureCard["FeatureCard\nLink card"]
 
-  CharacterOverview --> CharacterOverviewGuest["CharacterOverviewGuest.jsx<br/>(CTA to login)"]
-  CharacterOverview --> CharacterOverviewLoggedIn["CharacterOverviewLoggedIn.jsx<br/>(list/manage characters)"]
+  CampaignOverview --> CampaignOverviewGuest["CampaignOverviewGuest\nCTA to login"]
+  CampaignOverview --> CampaignOverviewLoggedIn["CampaignOverviewLoggedIn\nPlaceholder"]
+  CampaignOverviewGuest --> OverviewPanel["OverviewPanel\nHero + CTA panel"]
+  CampaignOverviewLoggedIn --> UnderConstruction["UnderConstruction\nPlaceholder page"]
 
-  ProtectedRoute --> Account["Account.jsx<br/>(view/update/delete account)"]
-  ProtectedRoute --> CharacterCreate["CharacterCreate.jsx<br/>(currently placeholder)"]
-  ProtectedRoute --> CharacterDetail["CharacterDetail.jsx<br/>(view single character)"]
-  ProtectedRoute --> CharacterEdit["CharacterEdit.jsx<br/>(currently placeholder)"]
-
-  CharacterDetail --> CharacterHeader["CharacterHeader<br/>(file-local component)"]
-  CharacterDetail --> AbilityScoreBox["AbilityScoreBox<br/>(file-local component)"]
-  CharacterDetail --> NoteLog["NoteLog<br/>(file-local component)"]
-  AbilityScoreBox --> AbilityScore["AbilityScore<br/>(file-local component)"]
-
-  HomepageGuest --> FeaturePanel["FeaturePanel.jsx<br/>(tabbed feature section)"]
-  HomepageLoggedIn --> FeatureCard["FeatureCard.jsx<br/>(link card)"]
-  FeaturePanel --> TabSwitcher["TabSwitcher.jsx<br/>(tab switcher UI)"]
-
-  Login --> FormCard["FormCard.jsx<br/>(form layout wrapper)"]
-  Register --> FormCard
-  Account --> FormCard
-  FormCard --> Field["Field.jsx<br/>(input + label + validation)"]
-  FormCard --> Button["Button.jsx<br/>(primary/secondary/danger)"]
-  FormCard --> StatusMessage["StatusMessage.jsx<br/>(success/error feedback)"]
-
-  HomepageGuest --> StatusMessage
-  Account --> StatusMessage
-
-  CampaignOverviewGuest --> OverviewPanel["OverviewPanel.jsx<br/>(hero + CTA panel)"]
+  CharacterOverview --> CharacterOverviewGuest["CharacterOverviewGuest\nCTA to login"]
+  CharacterOverview --> CharacterOverviewLoggedIn["CharacterOverviewLoggedIn\nList + manage"]
   CharacterOverviewGuest --> OverviewPanel
-  OverviewPanel --> Button
-  OverviewPanel --> ImagePlaceholder["ImagePlaceholder.jsx<br/>(illustration placeholder)"]
+  CharacterOverviewLoggedIn --> CharacterCard["CharacterCard\nCharacter summary"]
+  CharacterCard --> ProfilePicturePlaceholder["ProfilePicturePlaceholder\nAvatar"]
 
-  CampaignOverviewLoggedIn --> UnderConstruction["UnderConstruction.jsx<br/>(placeholder page)"]
+  ProtectedRoute --> Account["Account\nEdit / delete account"]
+  ProtectedRoute --> CharacterDetail["CharacterDetail\nView character"]
+  ProtectedRoute --> CharacterCreate["CharacterCreate\nPlaceholder"]
+  ProtectedRoute --> CharacterEdit["CharacterEdit\nPlaceholder"]
   CharacterCreate --> UnderConstruction
   CharacterEdit --> UnderConstruction
 
-  CharacterOverviewLoggedIn --> CharacterCard["CharacterCard.jsx<br/>(character summary card)"]
-  CharacterCard --> ProfilePicturePlaceholder["ProfilePicturePlaceholder.jsx<br/>(avatar placeholder)"]
+  CharacterDetail --> CharacterHeader["CharacterHeader\nfile-local"]
+  CharacterDetail --> AbilityScoreBox["AbilityScoreBox\nfile-local"]
+  CharacterDetail --> NoteLog["NoteLog\nfile-local"]
+  AbilityScoreBox --> AbilityScore["AbilityScore\nfile-local"]
 
-  Header --> Toggle["Toggle.jsx<br/>(theme switch UI)"]
+  subgraph Shared["Shared UI components"]
+    FormCard["FormCard\nLogin · Register · Account"]
+    Field["Field\nInput + label + validation"]
+    Button["Button\nPrimary · secondary · danger"]
+    StatusMessage["StatusMessage\nSuccess / error feedback"]
+    ImagePlaceholder["ImagePlaceholder\nOverviewPanel illustration"]
+  end
 ```
 
 ---
