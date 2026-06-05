@@ -38,7 +38,10 @@ export default function CharacterOverviewLoggedIn() {
     return (
         <div className={styles.page}>
             <div className={styles.topBar}>
-                <h2>My Character Sheets</h2>
+                <div className={styles.titleGroup}>
+                    <h2>My Character Sheets</h2>
+                    <span className={styles.count}>{characters.length} {characters.length === 1 ? 'character' : 'characters'}</span>
+                </div>
                 <Button onClick={() => navigate('/characters/create')}>Create a Character</Button>
             </div>
             {status && <StatusMessage status={status} />}
